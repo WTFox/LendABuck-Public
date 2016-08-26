@@ -1,7 +1,7 @@
 LendABuck
 ============
 
-A web app to assist with lending money to those who needed it and also provide an easy way to be paid back.
+A web app written in `flask` to assist with lending money to those who needed it and also provide an easy way to be paid back.
 
 
 Installation
