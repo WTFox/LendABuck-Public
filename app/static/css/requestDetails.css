@@ -1,0 +1,9 @@
+.offerCard > .panel {
+    background: #fff;
+    color: black;
+}
+
+.displayAmount {
+    font-size: 5em;
+    font-weight: 200;
+}

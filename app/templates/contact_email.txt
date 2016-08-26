@@ -1,0 +1,6 @@
+New Message from:
+    {{ sender.name }}
+    {{ sender.email }}
+    {{ sender.phone }}
+
+{{ sender.message }}

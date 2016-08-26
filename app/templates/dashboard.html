@@ -1,0 +1,181 @@
+{% extends 'dashboardlayout.html' %}
+{% from 'macros.html' import offerCard, requestCard, offerDetailsModal %}
+
+{% block title %}LendABuck{% endblock %}
+
+{% block meta %}
+{% endblock %}
+
+{% block css %}
+    <link type="text/css" href="{{ url_for('static', filename="css/requestDetails.css") }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-text">
+                        <span class="name">Welcome, {{ displayname }}</span>
+                        <hr class="star-light">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="" id="requests">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Requests</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="#makeRequestModal" data-toggle="modal" class="btn btn-dark-outline pull-right">
+                        Make Request
+                    </a>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                {% for request in requests %}
+                    {{ requestCard(request) }}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {#    Your Offers section #}
+    <section class="success" id="yourOffers">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Your Offers</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                {% for offer in myOffers %}
+                    {{ offerCard(offer) }}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+    <section class="" id="yourRequests">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Your Requests</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                {% if myRequest %}
+                    {{ requestCard(myRequest[0]) }}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Make a Request Modal -->
+    <div class="portfolio-modal modal fade" id="makeRequestModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h2>Make A Request</h2>
+                            <hr class="star-primary">
+                        </div>
+                    </div>
+                </div>
+
+                <form class="form-signup" id="submitRequestForm" role="form" method="POST"
+                      action="{{ url_for('submit_request') }}">
+                    <input id="accountID" class="hide" name="accountID" value="{{ accountid }}"/>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4"></div>
+
+                            <div class="col-md-4">
+                                <div id="signInAlert"></div>
+                            </div>
+
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <label>Amount Needed</label>
+                                    <input type="number" name="amountNeeded" id="amountNeeded"
+                                           max="100" class="form-control"
+                                           placeholder="Amount Needed"
+                                           required>
+                                </div>
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <label>Expected Payback Days</label>
+                                    <input type="number" name="expectedPaybackDays" max="14" id="expectedPaybackDays"
+                                           class="form-control"
+                                           placeholder="Expected Payback Days"
+                                           required>
+                                </div>
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <label>Max Interest</label>
+                                    <input type="number" name="maxInterest" id="maxInterest" class="form-control"
+                                           placeholder="Max Interest"
+                                           required>
+                                </div>
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <label for="signInPassword" class="">Request Expiration</label>
+                                    <input type="date" name="requestExpiration"
+                                           id="requestExpiration"
+                                           class="form-control"
+                                           placeholder="Request Expiration"
+                                           required>
+                                </div>
+                                <div class="form-group col-xs-12 floating-label-form-group controls">
+                                    <label for="signInEmail" class="">Reason Needed</label>
+                                    <textarea name="reasonNeeded" id="reasonNeeded" class="form-control"
+                                              placeholder="Reason Needed" rows="5"
+                                              required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                    </div>
+                </form>
+
+                <br>
+
+                <button id="submitRequestButton" class="btn btn-lg btn-dark-outline">
+                    Submit Request
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {% for offer in myOffers %}
+        {{ offerDetailsModal(offer, 'xxx') }}
+    {% endfor %}
+
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
